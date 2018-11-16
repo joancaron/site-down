@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteDown", "src\SiteDown\SiteDown.csproj", "{68343A7C-B325-47A8-91A0-3787C3917042}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteDown.Tests", "test\SiteDown.Tests\SiteDown.Tests.csproj", "{EA241B11-5517-46A4-921A-8D0A82EEE167}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{68343A7C-B325-47A8-91A0-3787C3917042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68343A7C-B325-47A8-91A0-3787C3917042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68343A7C-B325-47A8-91A0-3787C3917042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68343A7C-B325-47A8-91A0-3787C3917042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA241B11-5517-46A4-921A-8D0A82EEE167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA241B11-5517-46A4-921A-8D0A82EEE167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA241B11-5517-46A4-921A-8D0A82EEE167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA241B11-5517-46A4-921A-8D0A82EEE167}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {20F7488B-68DC-42D3-AC8A-EB43E89B8E76}
+	EndGlobalSection
+EndGlobal

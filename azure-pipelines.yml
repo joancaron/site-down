@@ -1,0 +1,50 @@
+queue:
+  name: Hosted VS2017
+
+trigger:
+- master
+- release/*
+
+variables:
+  TreatWarningsAsErrors: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  BuildConfiguration: Release
+  BuildPlatform: Any CPU
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Install NBGV tool'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'install --tool-path . nbgv'
+
+- script: 'nbgv cloud' 
+  displayName: 'Set Version'
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: '**/*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: '**/*[Tt]ests/*.csproj'
+    arguments: '--configuration $(BuildConfiguration) --no-build --no-restore'
+    publishTestResults: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    arguments: '-o "$(build.artifactstagingdirectory)" --configuration $(BuildConfiguration) --no-build --no-restore'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: '$(Parameters.ArtifactName)'
