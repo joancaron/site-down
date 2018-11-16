@@ -11,7 +11,7 @@ namespace SiteDown
     public static class CheckFunction
     {
         [FunctionName("Check")]
-        public static async Task<IActionResult> Run(
+        public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]
             HttpRequest req,
             string url,
