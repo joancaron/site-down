@@ -41,10 +41,10 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
-    arguments: '-o "$(build.artifactstagingdirectory)" --configuration $(BuildConfiguration) --no-build --no-restore'
+    arguments: '-o "$(build.artifactstagingdirectory)/Publish" --configuration $(BuildConfiguration) --no-build --no-restore'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
+    PathtoPublish: '$(build.artifactstagingdirectory)/Publish'
     ArtifactName: 'Function'
