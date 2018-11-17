@@ -1,4 +1,5 @@
-using System.Threading.Tasks;
+// Copyright (c) Joan Caron and contributors. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ namespace SiteDown
     {
         [FunctionName("Check")]
         public static IActionResult Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "api")]
             HttpRequest req,
             string url,
             ILogger log)

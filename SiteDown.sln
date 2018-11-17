@@ -3,9 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteDown", "src\SiteDown\SiteDown.csproj", "{68343A7C-B325-47A8-91A0-3787C3917042}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteDown", "src\SiteDown\SiteDown.csproj", "{68343A7C-B325-47A8-91A0-3787C3917042}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteDown.Tests", "test\SiteDown.Tests\SiteDown.Tests.csproj", "{EA241B11-5517-46A4-921A-8D0A82EEE167}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiteDown.Tests", "test\SiteDown.Tests\SiteDown.Tests.csproj", "{EA241B11-5517-46A4-921A-8D0A82EEE167}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{7D142AEB-55BE-406E-9633-8B86D3774BE1}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		LICENSE = LICENSE
+		README.md = README.md
+		stylecop.json = stylecop.json
+		version.json = version.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
