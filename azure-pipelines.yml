@@ -14,6 +14,7 @@ variables:
 steps:
 - task: DotNetCoreCLI@2
   displayName: 'Install NBGV tool'
+  condition: ne(variables['system.pullrequest.isfork'], true)
   inputs:
     command: custom
     custom: tool
@@ -21,6 +22,7 @@ steps:
 
 - script: 'nbgv cloud' 
   displayName: 'Set Version'
+  condition: ne(variables['system.pullrequest.isfork'], true)
 
 - task: DotNetCoreCLI@2
   displayName: Build
@@ -38,6 +40,7 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish'
+  condition: ne(variables['system.pullrequest.isfork'], true)
   inputs:
     command: publish
     publishWebProjects: false
@@ -45,6 +48,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
+  condition: ne(variables['system.pullrequest.isfork'], true)
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)/Publish'
     ArtifactName: 'Function'
