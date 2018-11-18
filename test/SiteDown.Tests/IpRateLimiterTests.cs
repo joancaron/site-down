@@ -14,7 +14,7 @@ namespace SiteDown.Tests
 {
     public class IpRateLimiterTests
     {
-        private readonly TimeSpan _defaultCacheDuration = TimeSpan.FromMilliseconds(10);
+        private readonly TimeSpan _defaultCacheDuration = TimeSpan.FromMilliseconds(500);
 
         private readonly Mock<HttpRequest> _requestMock;
 
