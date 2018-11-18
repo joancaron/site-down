@@ -22,22 +22,22 @@ namespace SiteDown
 
         private const string XForwadedForHeaderKey = "X-Forwarded-For";
 
-        private static HttpClient httpClient;
+        private static readonly HttpClient HttpClient;
 
-        private static RetryPolicy policy;
+        private static readonly MemoryCache MemoryCache;
 
-        private static MemoryCache memoryCache;
+        private static readonly RetryPolicy RetryPolicy;
 
         /// <summary>
         /// Initializes static members of the SiteDown.CheckFunction class.
         /// </summary>
         static CheckFunction()
         {
-            httpClient = new HttpClient();
-            policy = Policy.Handle<Exception>().WaitAndRetryAsync(
+            HttpClient = new HttpClient();
+            RetryPolicy = Policy.Handle<Exception>().WaitAndRetryAsync(
                 3,
                 attempt => TimeSpan.FromSeconds(0.1 * Math.Pow(2, attempt)));
-            memoryCache = new MemoryCache(new MemoryCacheOptions());
+            MemoryCache = new MemoryCache(new MemoryCacheOptions());
         }
 
         [FunctionName("Check")]
@@ -49,42 +49,27 @@ namespace SiteDown
         {
             IActionResult actionResult = null;
 
-            if (request.Query.TryGetValue("url", out var values) 
-                && Uri.TryCreate(values.First(), UriKind.Absolute, out var siteUrl))
+            if (request.Query.TryGetValue("url", out var values) && Uri.TryCreate(
+                    values.First(),
+                    UriKind.Absolute,
+                    out var siteUrl))
             {
-                string ip;
-
-                if (request.Headers.TryGetValue(CloudflareIpHeaderKey, out var ips)
-                    || request.Headers.TryGetValue(XForwadedForHeaderKey, out ips))
-                {
-                    ip = ips.First();
-                }
-                else
-                {
-                    ip = request.HttpContext.Connection.RemoteIpAddress.ToString();
-                }
-
-                var canExecute = !memoryCache.TryGetValue(ip, out _);
+                var canExecute = IpRateLimiter.CanExecute(request, MemoryCache);
 
                 if (canExecute)
                 {
-                    using (var entry = memoryCache.CreateEntry(ip))
-                    {
-                        entry.SlidingExpiration = TimeSpan.FromMilliseconds(500);
-                    }
-
-                    await policy.ExecuteAsync(
+                    await RetryPolicy.ExecuteAsync(
                         async context =>
+                        {
+                            var result = await HttpClient.GetAsync(
+                                             siteUrl,
+                                             HttpCompletionOption.ResponseHeadersRead,
+                                             cancellationToken);
+                            if (result.IsSuccessStatusCode)
                             {
-                                var result = await httpClient.GetAsync(
-                                                 siteUrl,
-                                                 HttpCompletionOption.ResponseHeadersRead,
-                                                 cancellationToken);
-                                if (result.IsSuccessStatusCode)
-                                {
-                                    actionResult = new OkResult();
-                                }
-                            },
+                                actionResult = new OkResult();
+                            }
+                        },
                         cancellationToken);
                 }
                 else
